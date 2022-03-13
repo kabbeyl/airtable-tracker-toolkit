@@ -1,17 +1,17 @@
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Airtable from "airtable";
-import { GeolocateControl, Map, NavigationControl } from "mapbox-gl";
-import 'mapbox-gl/dist/mapbox-gl.css';
-import mapboxgl from 'mapbox-gl';
-import { useRouter } from 'next/router';
+import mapboxgl, { GeolocateControl, Map, NavigationControl } from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ProjectList from "../components/ProjectList";
-import mapstyle from '../styles/mapstyle.json';
-import { getProjectGeoJSON } from "../utils/getProject";
-import Link from 'next/link'
-import Head from 'next/head'
-import { siteTitle } from '../toolkit.config'
+import mapstyle from "../styles/mapstyle.json";
+import { boundingBox, city, siteTitle, state } from "../toolkit.config";
+import { getProject } from "../utils/getProject";
+import { geocodeAddress } from "../utils/geocodeAddress";
 
 export async function getStaticProps(context) {
   const airtable = new Airtable({
@@ -19,184 +19,188 @@ export async function getStaticProps(context) {
   });
 
   const records = await airtable
-    .base(process.env.AIRTABLE_BASE_ID)('Projects')
+    .base(process.env.AIRTABLE_BASE_ID)("Projects")
     .select({
-      fields: ['Name', 'the_geom', 'Slug', 'Last Modified', 'Address', 'Uses'],
-      sort: [{ field: 'Last Modified', direction: 'desc' }],
-      filterByFormula: process.env.NODE_ENV === 'production' ? process.env[process.env.FILTER_VAR] : process.env.DEV_RECORD_FILTER
+      sort: [{ field: "Last Modified", direction: "desc" }],
+      filterByFormula: process.env.RECORD_FILTER,
     })
     .all();
 
-  const projects = records.map((proj) => getProjectGeoJSON(proj, false));
+  const projects = records.map((proj) => getProject(proj, false));
 
-  const centroids = records.map((proj) => getProjectGeoJSON(proj, true));
+  let features = []
+  for (let proj of projects) {
+    let geocoded = await geocodeAddress(proj.address);
+
+    features.push({
+      type: "Feature",
+      properties: {...proj},
+      geometry: geocoded
+    })
+  }
 
   return {
     props: {
       projects,
-      centroids
+      features
     },
   };
 }
 
 export default function ProjectMapPage(props) {
+  console.log(props.features)
+  let [theMap, setTheMap] = useState(null);
+  let [theGeocoder, setTheGeocoder] = useState(null);
 
-  let [theMap, setTheMap] = useState(null)
-  let [theGeocoder, setTheGeocoder] = useState(null)
+  let [visibleProjects, setVisibleProjects] = useState(props.features);
 
-  let [visibleProjects, setVisibleProjects] = useState(props.projects)
-
-  let [result, setResult] = useState(null)
+  let [result, setResult] = useState(null);
 
   const router = useRouter();
 
   useEffect(() => {
-    mapboxgl.accessToken = 'pk.eyJ1Ijoiam1jYnJvb20iLCJhIjoianRuR3B1NCJ9.cePohSx5Od4SJhMVjFuCQA';
-    const detroitBbox = [-83.287803, 42.255192, -82.910451, 42.45023];
+    mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+
     let map = new Map({
-      container: 'map',
+      container: "map",
       style: mapstyle,
-      bounds: detroitBbox
+      bounds: boundingBox,
     });
 
-    map.addControl(new NavigationControl())
+    map.addControl(new NavigationControl());
 
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
-      placeholder: `Search for an address in Detroit`,
-      bbox: [-84, 42, -82, 43],
-      countries: 'us'
+      placeholder: `Search for an address in ${city}`,
+      bbox: boundingBox,
+      countries: "us",
     });
 
-    geocoder.addTo("#geocoder")
+    geocoder.addTo("#geocoder");
 
-    setTheGeocoder(geocoder)
+    setTheGeocoder(geocoder);
 
     // Add geocoder result to container.
-    geocoder.on('result', (e) => {
-      setResult(e.result)
+    geocoder.on("result", (e) => {
+      setResult(e.result);
     });
 
     // Clear results container when search is cleared.
-    geocoder.on('clear', () => {
-      setResult(null)
+    geocoder.on("clear", () => {
+      setResult(null);
     });
 
-    map.addControl(new GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true
-      },
-      // When active the map will receive updates to the device's location as it changes.
-      trackUserLocation: true,
-      // Draw an arrow next to the location dot to indicate which direction the device is heading.
-      showUserHeading: true
-    })
-    )
+    map.addControl(
+      new GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+        // When active the map will receive updates to the device's location as it changes.
+        trackUserLocation: true,
+        // Draw an arrow next to the location dot to indicate which direction the device is heading.
+        showUserHeading: true,
+      })
+    );
 
-    map.on('load', () => {
+    map.on("load", () => {
+      map.resize();
 
-      map.resize()
-
-      setTheMap(map)
+      setTheMap(map);
 
       map.getSource("projects").setData({
-        "type": "FeatureCollection",
-        "features": props.projects
-      })
+        type: "FeatureCollection",
+        features: props.features,
+      });
 
-      map.getSource("centroids").setData({
-        "type": "FeatureCollection",
-        "features": props.centroids
-      })
+    });
 
-      // map.addLayer({
-      //   id: "projects-label",
-      //   source: "projects",
-      //   type: "symbol",
-      //   paint: {
-      //     "line-color": "red",
-      //     "line-opacity": 1,
-      //     "line-width": 2
-      //   }
-      // })
-
-    })
-
-    map.on('click', (e) => {
+    map.on("click", (e) => {
       let features = map.queryRenderedFeatures(e.point, {
-        layers: ['projects-circle']
-      })
+        layers: ["projects-circle"],
+      });
       let labels = map.queryRenderedFeatures(e.point, {
-        layers: ['projects-label']
-      })
+        layers: ["projects-label"],
+      });
 
       if (labels.length > 0) {
-        router.push(`/projects/${labels[0].properties.slug}`)
+        router.push(`/projects/${labels[0].properties.slug}`);
       }
       if (features.length > 0) {
         map.flyTo({
           center: features[0].geometry.coordinates,
-          zoom: 16.5
-        })
+          zoom: 16.5,
+        });
       }
-    })
+    });
 
-    map.on('moveend', () => {
-      let visibleFeatures = map.queryRenderedFeatures({ layers: ["projects-circle", "projects-label"] })
+    map.on("moveend", () => {
+      let visibleFeatures = map.queryRenderedFeatures({
+        layers: ["projects-circle", "projects-label"],
+      });
 
       // dedupe features based on slug
       let reducedFeatures = visibleFeatures.reduce((unique, item) => {
-        if (unique.length > 0 && unique.map(p => p.properties.slug).includes(item.properties.slug)) {
-          return unique
+        if (
+          unique.length > 0 &&
+          unique.map((p) => p.properties.slug).includes(item.properties.slug)
+        ) {
+          return unique;
+        } else {
+          return [...unique, item];
         }
-        else {
-          return [...unique, item]
-        }
-      }, [])
+      }, []);
 
-      setVisibleProjects(reducedFeatures)
-    })
-
-  }, [])
+      setVisibleProjects(reducedFeatures);
+    });
+  }, []);
 
   useEffect(() => {
     if (theMap && result) {
       theMap.flyTo({
         center: result.geometry.coordinates,
-        zoom: 15
-      })
+        zoom: 15,
+      });
     }
-
-  }, [result])
+  }, [result]);
 
   return (
     <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
-        <title>{`Detroit Development Tracker: Map of all projects`}</title>
+        <title>{`${siteTitle}: Map of all projects`}</title>
         <meta
           name="description"
-          content="Tracking development in Detroit, Michigan."
+          content={`Tracking development in ${city}, ${state}.`}
           key="description"
         />
         <meta property="og:title" content={siteTitle} key="title" />
-        <meta property="og:description" content="Use the Detroit Development Tracker to look up information about real estate development in the city." />
+        <meta
+          property="og:description"
+          content="Use the Detroit Development Tracker to look up information about real estate development in the city."
+        />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
       <div className="max-w-xl mx-auto">
-        <h2>
-          Map of Detroit development projects
-        </h2>
+        <h2>Map of {city} development projects</h2>
         <p className="pt-4 md:pt-6 pb-2">
-          Explore the map or enter an address to see developments in Detroit.
+          Explore the map or enter an address to see developments in {city}.
           <span className="block">Click on a project to see more details.</span>
         </p>
-        <span className="leading-7 font-light bg-highlight mb-4 text-sm"> See something missing? <Link href={`/submit-a-tip`}>Send a tip</Link> to help track Detroit development.</span>
+        <span className="leading-7 font-light bg-highlight mb-4 text-sm">
+          {" "}
+          See something missing? <Link href={`/submit-a-tip`}>
+            Send a tip
+          </Link>{" "}
+          to help track {city} development.
+        </span>
       </div>
-      <div id="geocoder" className='my-7 max-w-xl mx-auto'></div>
-      <div id='map' className="max-w-6xl mx-auto border-1 border-black h-128" />
-      <ProjectList projects={visibleProjects.map(p => p.properties)} title="All development projects in the current map view" />
+      <div id="geocoder" className="my-7 max-w-xl mx-auto"></div>
+      <div id="map" className="max-w-6xl mx-auto border-1 border-black h-96" />
+      <ProjectList
+        projects={visibleProjects.map(p => p.properties)}
+        title="All development projects in the current map view"
+      />
     </>
-  )
+  );
 }

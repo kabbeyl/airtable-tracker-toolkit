@@ -3,7 +3,14 @@ import Tag from './Tag';
 
 const ProjectListEntry = ({ project }) => {
 
-  let uses = project.uses ? project.uses.split(", ") : ['No data']
+  let uses;
+  if(typeof(project.uses) === 'string') {
+    uses = JSON.parse(project.uses)
+    console.log(uses)
+  }
+  else {
+    uses = project.uses ? project.uses : ['No data']
+  }
 
   return (
     <Link href={`/projects/${project.slug}`}>
@@ -14,13 +21,11 @@ const ProjectListEntry = ({ project }) => {
           </Link>
         </h3>
         {project.address !== "null" && <span className="font-normal text-sm">{` ${project.address ? project.address : `N/A`}`}</span>}
-        {uses.length > 0 &&
-          <div className="flex gap-3 mt-4 flex-wrap ">
-            {uses.map(u => (
-              <Tag key={u} type="use" value={u} />
-            ))}
-          </div>
-        }
+        <div className="flex gap-3 mt-4 flex-wrap ">
+          {uses.map(u => (
+            <Tag key={u} type="use" value={u} />
+          ))}
+        </div>
       </div>
     </Link>
   );

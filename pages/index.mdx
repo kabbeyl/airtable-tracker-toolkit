@@ -1,0 +1,23 @@
+import Link from 'next/link'
+import { siteTitle, city, state } from '../toolkit.config'
+import Head from 'next/head';
+
+<Head>
+  <link rel="icon" href="/favicon.ico" />
+  <title>{siteTitle}</title>
+  <meta
+    name="description"
+    content={`Tracking development in ${city}, ${state}.`}
+    key="description"
+  />
+  <meta property="og:title" content={siteTitle} key="title" />
+  <meta property="og:description" content={`Use the ${city} Development Tracker to look up information about real estate development in the city.`} />
+  <meta name="twitter:card" content="summary_large_image" />
+</Head>
+
+# Use the {siteTitle} to build a development tracker.
+
+You can explore projects on the [map](./map),
+see a list of [all projects](./projects) and
+help us add developments to the tracker by [submitting a tip](./submit-a-tip).
+

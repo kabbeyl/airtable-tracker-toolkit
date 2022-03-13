@@ -1,12 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  background: #FAFAFA;
-  font-family: "DM Sans";
+  background: #fafafa;
+  font-family: Inter, sans-serif;
+
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+}
+
+/* MDX styles */
 
 main > h1, h2 {
   @apply mb-6;
@@ -34,23 +43,20 @@ header > .container {
   @apply max-w-screen-xl;
 }
 
-header h1, footer h1 {
-  font-family: DM Mono;
-  font-style: normal;
-  font-weight: 500;
+header h1,
+footer h1 {
   @apply text-base;
   @apply md:text-xl;
-  line-height: 21px;
-  @apply md:leading-7;
   @apply w-3/4;
   @apply md:w-auto;
+  @apply hover:cursor-pointer;
 }
 
 /* Nav */
 
 nav {
-  @apply h-15;
-  @apply md:h-22;
+  @apply h-16;
+  @apply md:h-24;
   @apply flex;
   @apply items-center;
 }
@@ -63,24 +69,22 @@ nav > ul {
 }
 
 .nav-here {
-  border:1px solid #212529;
+  border: 1px solid #212529;
   background: none;
   @apply font-normal;
 }
 
 nav li {
-  @apply bg-ternblue;
-  padding: 0px 30px;
-  line-height: 40px;
-  border-radius: 100px;
-  font-family: 'DM Mono';
-  font-weight: 400;
-  font-size: 14px;
+  @apply px-8;
+  @apply leading-10;
+  @apply rounded-full;
+  @apply bg-primary;
+  @apply bg-opacity-30;
   @apply hover:cursor-pointer;
 }
 
 nav li:hover {
-  background: #EAFFFE;
+  @apply bg-gray-200;
 }
 
 /* Main */
@@ -95,22 +99,24 @@ main {
 }
 
 main a {
-  color: #2965FF;
+  color: #2965ff;
   @apply underline;
 }
 
 main section {
   @apply border-2;
-  @apply border-uploadblue;
+  @apply border-gray-300;
   @apply bg-white;
 }
 
 main section h2 {
-  @apply bg-uploadblue;
   @apply text-lg;
   @apply leading-6;
-  @apply px-7.5;
-  @apply py-2.5;
+  @apply bg-primary;
+  @apply bg-opacity-25;
+  @apply px-8;
+  @apply py-3;
+  @apply mb-0;
 }
 
 main h1 {
@@ -121,7 +127,7 @@ main h1 {
 }
 
 main h2 {
-  @apply text-lgish;
+  @apply text-lg;
   @apply md:text-xl;
   @apply leading-6;
   @apply font-medium;
@@ -129,13 +135,13 @@ main h2 {
 
 main h3 {
   @apply text-lg;
-  @apply md:text-lgish;
+  @apply md:text-xl;
   @apply font-medium;
 }
 
 main ul {
   @apply list-disc;
-  @apply list-inside
+  @apply list-inside;
 }
 
 main ol {
@@ -166,14 +172,8 @@ footer button {
   padding: 0px 30px;
   line-height: 40px;
   border-radius: 100px;
-  @apply bg-mustard;
-  font-family: "DM Mono";
   @apply text-sm;
   @apply leading-10;
-}
-
-footer button:hover {
-  background: #FFE5BE;
 }
 
 footer > .container {
@@ -189,10 +189,9 @@ footer > .container {
 
 footer > p {
   @apply pt-10;
-  @apply md:pt-7;
+  @apply md:pt-8;
   @apply pb-6;
   @apply md:pb-16;
-  font-family: 'DM Mono';
 }
 
 .footer-nav {
@@ -206,18 +205,17 @@ footer > p {
   @apply md:gap-4;
 }
 
-footer span, .mobile-nav-item {
+footer span,
+.mobile-nav-item {
   @apply text-xl;
   @apply md:text-2xl;
   @apply leading-8;
   @apply md:leading-8;
   @apply underline;
   @apply font-medium;
-  color: #212529;
 }
 
 /* submit a tip */
-
 .submit-form div {
   @apply flex;
   @apply flex-col;
@@ -225,17 +223,17 @@ footer span, .mobile-nav-item {
 }
 
 .submit-form label {
-  background: #D7E2FF;
   @apply text-sm;
   @apply md:text-lg;
   @apply leading-6;
   @apply py-2.5;
   @apply px-3;
   @apply md:px-6;
+  @apply bg-primary;
+  @apply bg-opacity-25;
 }
 
 .submit-form input {
-  color: #616161;
   @apply text-sm;
   @apply md:text-base;
   @apply leading-6;
@@ -244,15 +242,13 @@ footer span, .mobile-nav-item {
   @apply py-5;
   @apply border-2;
   @apply file:rounded-full;
-  @apply file:bg-uploadblue;
   @apply file:hover:cursor-pointer;
   @apply file:border-0;
-  @apply file:font-dmmono;
   @apply file:px-6;
+  @apply file:py-2.5;
   @apply file:py-2.5;
   @apply file:mr-4;
   @apply file:text-sm;
-  border-color: #D7E2FF;
 }
 
 .submit-form textarea {
@@ -260,14 +256,15 @@ footer span, .mobile-nav-item {
   @apply text-base;
   @apply leading-6;
   @apply border-2;
-  border-color: #D7E2FF;
-  color: #616161;
   @apply px-5;
 }
 
 .submit-form button {
   @apply rounded-lg;
-  background: #A2EDE1;
+  @apply bg-tertiary;
+  @apply bg-opacity-60;
+  @apply hover:bg-tertiary;
+  @apply hover:bg-opacity-40;
   @apply py-2.5;
   @apply px-10;
   @apply w-auto;
@@ -278,13 +275,8 @@ footer span, .mobile-nav-item {
   @apply md:text-lg;
   @apply leading-9;
   @apply md:leading-10;
-  font-family: "DM Mono";
   @apply font-medium;
   @apply hover:cursor-pointer;
-}
-
-.submit-form button:hover {
-  background: #DEFFFD;
 }
 
 #geocoder {
@@ -311,7 +303,7 @@ footer span, .mobile-nav-item {
 }
 
 .synopsis p {
-  @apply mb-3;
+  @apply mb-2;
 }
 
 ::selection {

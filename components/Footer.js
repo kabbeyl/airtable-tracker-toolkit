@@ -1,7 +1,7 @@
 
 import { sections } from './Header'
 import Link from 'next/link';
-import { orgName, siteTitle } from '../toolkit.config';
+import { organization, siteTitle } from '../toolkit.config';
 
 const Footer = () => {
   return (
@@ -21,7 +21,7 @@ const Footer = () => {
           ))}
         </div>
       </div>
-      <p className='container text-xs leading-10'>&copy; {new Date().getFullYear()} {orgName}</p>
+      <p className='container text-xs leading-10'>&copy; {new Date().getFullYear()} {organization}</p>
     </footer>
   )
 }

@@ -1,5 +1,10 @@
 module.exports = {
-  siteTitle: `Detour Toolkit`,      // Site title.
-  city: `Omaha, Nebraska`,    // Location of the site
-  orgName: `My Fake Org`,      // used for copyright on footer
+  siteTitle: `Detour Airtable Toolkit`,
+  city: `Detroit`,
+  state: `Michigan`,
+  boundingBox: [-83.287803,42.25496,-82.910427,42.45023],
+  organization: `Test Organization Name`,
+  primary: '#9ADCFF',
+  secondary: '#FFF89A',
+  tertiary: '#FFB2A6',
 }

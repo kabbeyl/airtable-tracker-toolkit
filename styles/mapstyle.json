@@ -287,13 +287,6 @@
           "features": []
         }
       },
-      "centroids": {
-        "type": "geojson",
-        "data": {
-          "type": "FeatureCollection",
-          "features": []
-        }
-      },
       "boundary": {
         "type": "geojson",
         "data": "https://opendata.arcgis.com/datasets/86b221bb68ca4364afe81d156e54f95c_0.geojson"
@@ -2654,40 +2647,9 @@
           }
       },
       {
-        "id": "projects-fill",
-        "source": "projects",
-        "type": "fill",
-        "minzoom": 14.5,
-        "paint": {
-          "fill-color": "rgba(246, 255, 188, 1)",
-          "fill-opacity": {
-            "base": 1,
-            "stops": [[14.5, 0.01], [14.51, 0.05], [14.65, 0.75]]
-          }
-        }
-      },
-      {
-        "id": "projects-line",
-        "source": "projects",
-        "type": "line",
-        "minzoom": 14.5,
-        "layout": {
-          "line-join": "round"
-        },
-        "paint": {
-          "line-color": "darkblue",
-          "line-width": {
-            "base": 1,
-            "stops": [[14.5, 0.01], [14.51, 0.05], [14.65, 1], [17, 2]]
-          },
-          "line-opacity": 1
-        }
-      },
-      {
         "id": "projects-circle",
-        "source": "centroids",
+        "source": "projects",
         "type": "circle",
-        "maxzoom": 14.5,
         "paint":{
           "circle-radius": {
             "base": 1,
@@ -2700,7 +2662,7 @@
       },
       {
         "id": "projects-icon",
-        "source": "centroids",
+        "source": "projects",
         "type": "symbol",
         "layout": {
           "visibility": "none",
@@ -2711,13 +2673,13 @@
       },
       {
         "id": "projects-label",
-        "source": "centroids",
+        "source": "projects",
         "type": "symbol",
         "minzoom": 14.5,
         "layout": {
           "text-field": ["get", "name"],
           "text-font": ["Roboto Condensed Bold"],
-          "text-offset": [0, 0],
+          "text-offset": [0, 2],
           "text-line-height": 1,
           "text-size": {
             "base": 1,

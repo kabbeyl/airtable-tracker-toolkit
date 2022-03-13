@@ -6,42 +6,25 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import mapstyle from '../../styles/mapstyle.json'
 import centroid from "@turf/centroid";
 import PageSection from "../../components/PageSection";
+import {mapboxAccessToken} from '../../toolkit.config'
 
-const ProjectMap = ({ id, geom, editor, project }) => {
+const ProjectMap = ({ feature }) => {
 
   let fc = {
     type: "FeatureCollection",
-    features: geom ? [
-      {
-        type: "Feature",
-        geometry: JSON.parse(geom),
-        properties: {...project}
-      }
-    ] : []
+    features: [feature]
   }
-
-  let centroidFc = {
-    type: "FeatureCollection",
-    features: geom ? [
-      {
-        type: "Feature",
-        geometry: centroid(JSON.parse(geom)).geometry,
-        properties: {...project}
-      }
-    ] : []
-  }
-
-  let [theGeom, setTheGeom] = useState(fc)
 
   useEffect(() => {
-    const accessToken = 'pk.eyJ1Ijoiam1jYnJvb20iLCJhIjoianRuR3B1NCJ9.cePohSx5Od4SJhMVjFuCQA';
-    const detroitBbox = [-83.287803, 42.255192, -82.910451, 42.45023];
+    const accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+
     let map = new Map({
       container: 'map',
       style: mapstyle,
-      bounds: geom ? bbox(JSON.parse(geom)) : detroitBbox,
+      bounds: bbox(fc),
       fitBoundsOptions: {
-        padding: 50
+        padding: 50,
+        maxZoom: 17
       },
       interactive: false,
       accessToken: accessToken
@@ -52,22 +35,15 @@ const ProjectMap = ({ id, geom, editor, project }) => {
     map.on('load', () => {
       map.resize();
       map.getSource("projects").setData(fc)
-      map.getSource("centroids").setData(centroidFc)
       map.setLayoutProperty("projects-icon", "visibility", "none")
-      map.setLayoutProperty("projects-label", "visibility", "none")
+      map.setLayoutProperty("projects-label", "visibility", "visible")
       map.setLayoutProperty("projects-circle", "visibility", "visible")
     });
   }, [])
 
-  let truncated, featureZeroGeom;
-  if(theGeom && theGeom.features.length > 0) {
-    truncated = truncate(theGeom, { precision: 5 })
-    featureZeroGeom = truncated.features[0].geometry
-  }
-
   return (
     <PageSection title='Where is it?' padding={false}>
-      <div id="map" className="min-h-map h-full"></div>
+      <div id="map" className="h-96"></div>
     </PageSection>
   )
 }

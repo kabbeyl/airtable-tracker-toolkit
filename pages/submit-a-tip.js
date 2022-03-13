@@ -23,7 +23,7 @@ export default function SubmitPage() {
         cacheControl: '3600',
         upsert: false
       })
-    setPhotoUrl(`https://zikieyzmibovmrmmdxso.supabase.in/storage/v1/object/public/${data.Key}`)
+    setPhotoUrl(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${data.Key}`)
   }
 
   const [address, setAddress] = useState('')

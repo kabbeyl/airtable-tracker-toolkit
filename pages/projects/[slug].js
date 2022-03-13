@@ -9,7 +9,11 @@ import ProjectGallery from '../../components/Project/ProjectGallery';
 import ProjectHeader from '../../components/Project/ProjectHeader';
 import ProjectMap from '../../components/Project/ProjectMap';
 import ProjectParcel from '../../components/Project/ProjectParcel';
+import MarkdownDivider from '../../components/MarkdownDivider';
 import ProjectReport from "../../components/Project/ProjectReport";
+import {getProject} from '../../utils/getProject';
+import {geocodeAddress} from '../../utils/geocodeAddress';
+import { getParcel } from "../../utils/getParcel";
 
 dayjs.extend(relativeTime)
 
@@ -24,7 +28,7 @@ export async function getStaticPaths(context) {
   // get all the records in the Projects table
   const records = await airtable
     .base(process.env.AIRTABLE_BASE_ID)('Projects')
-    .select({ filterByFormula: process.env.NODE_ENV === 'production' ? process.env[process.env.FILTER_VAR] : process.env.DEV_RECORD_FILTER })
+    .select({ filterByFormula: process.env.RECORD_FILTER })
     .all();
 
   // generate an array of Projects
@@ -70,67 +74,31 @@ export async function getStaticProps(context) {
     console.log("Found too many records!")
   }
 
-  // get the Meetings which are related in Airtable
-  // to the current Project. We check for the existence of the 
-  // Project's Slug value in the ProjectSlug string.
-  // solution from: https://community.airtable.com/t/filterbyformula-api-not-working-for-linked-record-fields-with-multiple-records/30222/2
-  const meetings = await airtable
-    .base(process.env.AIRTABLE_BASE_ID)('Meetings')
-    .select({
-      // fields: ['Name', 'Status', 'Address', 'Link', 'the_geom'],
-      filterByFormula: `FIND("${context.params.slug}", ProjectSlug & '')`
-    })
-    .all();
-
-  // turn the Meeting records we fetched into normal,
-  // JSON-serializable objects
-  let projectMeetings = meetings.map(mtg => {
-    return {
-      name: mtg.get('Name'),
-      date: mtg.get('Date'),
-      slug: mtg.get('Slug')
-    }
-  })
-
   // create another object we can return
-  let project = {
-    id: record.id,
-    lastModified: record.get('Last Modified'),
+  let project = getProject(record);
 
-    // ProjectHeader fields
-    name: record.get('Name'),
-    slug: record.get('Slug'),
-    synopsis: record.get('Synopsis') || null,
-    status: record.get('Status') || null,
-    link: record.get('Link') || null,
-    buildType: record.get('Build type') || null,
-    uses: record.get('Uses') || null,
-    address: record.get('Address') || null,
-    notes: record.get('Notes') || null,
+  let geometry = await geocodeAddress(project.address);
 
-    // ProjectParcel fields
-    parcelId: record.get('Parcel ID') || null,
+  let parcelData = await getParcel(project.parcelId)
 
-    // ProjectMap fields
-    the_geom: record.get('the_geom') || null,
-
-    // ProjectGallery fields
-    images: record.get('Images') || null,
-    imageCaption: record.get('Image Caption') || null,
-
-    // linked Meetings
-    meetings: projectMeetings
-  };
+  let feature = {
+    type: "Feature",
+    geometry: geometry,
+    properties: {...project}
+  }
 
   return {
     props: {
       proj: project,
+      feature: feature,
+      parcelData: parcelData
     },
   };
 }
 
 const ProjectPage = (props) => {
-  let { proj, editor } = props;
+  let { proj, feature } = props;
+  console.log(feature)
   return (
     <>
 
@@ -152,13 +120,13 @@ const ProjectPage = (props) => {
             {proj.synopsis}
           </ReactMarkdown>
         </PageSection>
-        <ProjectParcel parcelId={proj.parcelId} />
-        <ProjectMap id={proj.id} geom={proj.the_geom} project={proj} />
+        <ProjectParcel parcelId={proj.parcelData} parcelData={props.parcelData} />
+        <ProjectMap id={proj.id} feature={feature} project={proj} />
         {proj.images && proj.images.length > 0 && <ProjectGallery images={proj.images} caption={proj.imageCaption} />}
       </div>
-      <div style={{ height: 2 }} className="max-w-3xl mx-auto my-14 bg-seafoam" />
+      <MarkdownDivider />
       <ProjectReport id={proj.id} />
-      <div className="font-dmmono text-sm font-normal mt-24 mx-auto max-w-xl text-center">
+      <div className="text-sm font-normal mt-24 mx-auto max-w-xl text-center">
         The page was last updated at {dayjs(proj.lastModified).format('h:MMa')} on {dayjs(proj.lastModified).format('M/D/YY')}.
       </div>
     </>
