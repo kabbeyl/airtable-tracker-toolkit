@@ -1,5 +1,5 @@
 module.exports = {
-  siteTitle: `Detour Airtable Toolkit`,
+  siteTitle: `Airtable Tracker Toolkit`,
   organization: `Test Organization Name`,
   city: `Detroit`,
   state: `Michigan`,

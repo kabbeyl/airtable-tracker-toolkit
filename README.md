@@ -1,4 +1,4 @@
-# development-tracker-toolkit
+# Airtable Tracker Toolkit
 
 Detour Detroit is building a development tracker toolkit, using Airtable, that anyone can use to create a development tracker for their city.
 
