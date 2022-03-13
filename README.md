@@ -1,69 +1,58 @@
 # development-tracker-toolkit
 
-Detour Detroit is building a development tracker for Detroit, Hamtramck, and Highland Park.
+Detour Detroit is building a development tracker toolkit, using Airtable, that anyone can use to create a development tracker for their city.
 
-## Accounts you'll need to sign up for and configure
+## Before you start
 
-### Airtable
+You should already have:
+- A GitHub account,  [generated an SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and [added the key to your GitHub account](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account).
+- `git` should be installed on your computer
 
-### Mapbox
+## Create your own copy of this site
 
-### Supabase
+- Fork this repository, using the "Fork" button at the top right of this page.
+- Clone your version to your local computer:
 
-## Developing/Contributing
+```
+git clone git@github.com:<your-user-name>/det-dev-tracker-toolkit.git
+```
 
-1. Clone this repository
-2. Populate `.env.development.example` and rename to `.env.development.local`
-3. Run `npm install` or `yarn`
-4. Run `netlify dev` to start your own version of the site at localhost:3000
+## Configure your local copy
 
-## Tech stack
+- From a terminal, run `npm install` in the root directory.
+- Populate the `.env.development.example` and rename it to `.env.development.local`. See [environment variables](#environment-variables) for more information about these values.
+- From a terminal, `yarn dev` in the root directory: this will start the development server.
+- If you see the toolkit running in your browser, congrats! You can now make changes to the site, or your Airtable, and you should see them live in the site.
 
-Here's a brief overview of parts of our stack -- where available I've linked to some videos which I think give a good explanation of the library/service/tool.
+## Customizing your site
 
-### React & Next.js
+### `toolkit.config.js`
 
-React is a popular front-end JavaScript library that makes it easy to build websites with flexible, reusable components.
+This file sits at the root of your site, and should be used to customize the site. Here is a list of the values in that file, and what they should be:
 
-[React in 100 seconds](https://www.youtube.com/watch?v=Tn6-PIqc4UM) is a good explanation of what React does and its benefits.
+- `siteTitle`: the title of your site.
+- `organization`: the name of your organization.
+- `city` and `state`: The city and state you're based in - this is purely for display purposes!
+- `boundingBox`: The bounding box of your region. You can find this with [bboxfinder.com](https://bboxfinder.com/):
+  - You want to zoom to your general region and then copy the **Map** value from bottom left. 
+  - Make sure the four numbers are between square brackets (`[` and `]`), like this: 
+  - `[-83.872890,42.216949,-83.581238,42.345985]` would be a good bounding box for [Ann Arbor, Michigan](http://bboxfinder.com/#42.231314,-83.806286,42.331773,-83.647842).
+- `primary`, `secondary`, and `tertiary`: Three basic colors you can configure the site with.
 
-Most sites use a React *framework* that handles low-level functions like URL routing - we're choosing [Next.js](https://nextjs.org/) as ours. We can point Next.js at Airtable, and Next.js will generate all of our sites' web pages for us based on the template we tell it to use, using React components.
+## Deploying the site to Netlify
 
-[Next.js in 100 seconds](https://www.youtube.com/watch?v=Sklc_fQBmcs) is the first part of this longer video. In particular we use Next.js as a static site generator.
+- Log in to Netlify with your GitHub account.
+- Link your site's GitHub repository to your Netlify account.
+- Populate your environment variables in Netlify
 
-React & Next.js are both free to use.
+## Environment variables
 
-### Airtable
+- `AIRTABLE_API_KEY`: The API key for your Airtable account. You can find this on your Airtable [account page](https://airtable.com/account).
+- `AIRTABLE_BASE_ID`: The ID of the Airtable base. Find this by clicking "Help" in the top right corner of the Airtable interface, then "API documentation" in the bottom right corner. The base ID will be in green text in the API introduction.
+- `AIRTABLE_RECORD_FILTER`: The filter to apply to the Airtable base. This is the only value which is pre-populated, as it's designed to work with [the example Airtable base](). This needs to be an [Airtable formula](https://support.airtable.com/hc/en-us/articles/203255215-Formula-Field-Reference).
+- `NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN`: The Mapbox access token for your project. You can find this on your Mapbox [account page](https://www.mapbox.com/account/).
+- `NEXT_PUBLIC_SUPABASE_URL`: The URL of your Supabase instance.
+- `NEXT_PUBLIC_SUPABASE_API_KEY`: The API key for your Supabase instance. You can find this on your Supabase [account page](https://supabase.com/account).
+- `PRODUCTION_URL`: The URL of the production site.
 
-[Airtable](https://airtable.com/) is our human-friendly CMS for the site. The Projects table and the Meetings table in our base control what pages get built, what components appear on those. We use the relational capability of Airtable to create a link between Projects and Meetings.
 
-We should expect to pay for Airtable if we keep using it. The free tier will be good enough for a while, but we should probably plan on Pro. Airtable is paid by the user, as well, so keeping the number of Airtable users at a minimum is key.
-
-[A quick tour of Airtable](https://www.youtube.com/watch?v=r0lsyTaAuJE) is a little sales-pitchy but gives a good overview. I prefer building with Airtable because it's pretty pleasant to use as a database with relational features.
-
-### Supabase
-
-[Supabase](https://supabase.io/) is an open-source clone of Google's [Firebase](https://firebase.google.com/). We use this for two purposes currently:
-- Authentication: Supabase manages the entire magic-link process, and gives us options in the site to display different content/components to logged-in users
-- File storage: In order to support uploads to Airtable, the file must already exist at a URL. A user uploads the file to our Supabase bucket and then we use that URL to feed to Airtable, who then make their own copy of the file. Therefore we can consider this bucket as strictly temporary.
-
-Theoretically, we could use Supabase's database function to fully replace Airtable. This would require us to greatly expand the in-site editing capabilities. But it would also enable deeper user integrations ("Give Jimmy permission to edit projects within 1.5 miles of [-83.5, 42.5]") since the site data would be living directly next to the user data.
-
-Here's [a comparison of Supabase with Firebase](https://www.youtube.com/watch?v=WiwfiVdfRIc&t=50s). We're using Auth and Storage.
-
-Supabase has a [generous free tier](https://supabase.io/pricing) (500MB database space, 10K users, 1GB storage) but we probably want to pay for a production instance at $25/mo. 
-
-### Netlify
-
-Netlify is a web hosting provider which integrates with our GitHub project repository. When we push new code to the `main` (production) branch, Netlify ingests the changes and builds a new version of the site -- this is known as continuous integration. Netlify can also look at a `development` branch of the codebase and build a development site for testing and feedback purposes.
-
-Other things we get with Netlify:
-- Basic analytics (how many visits, etc)
-- Domain management
-- A/B testing
-
-I have a business plan at Netlify that the dev-tracker can be hosted at -- the limits on that are very high, but shared across all my websites. Right now we don't come too close to the limit but we may approach that if the dev tracker becomes very popular.
-
-### Mapbox
-
-[Mapbox](https://www.mapbox.com/) is a somewhat small part of the site, but it is a potential cost if/when the site becomes very popular. We use their underlying map data and put our own on top of it. It's technically possible to replace them with open-source tools and our own data, but we should stay with Mapbox certainly as long as we're still within the usage limits of their free tier.
