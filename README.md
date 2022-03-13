@@ -1,4 +1,4 @@
-# Airtable Tracker Toolkit
+# [Airtable Tracker Toolkit](https://airtable-tracker-toolkit.netlify.app/)
 
 Detour Detroit is building a development tracker toolkit, using Airtable, that anyone can use to create a development tracker for their city.
 
@@ -13,14 +13,18 @@ You should already have:
 
 - Fork this repository, using the "Fork" button at the top right of this page.
 - You may want to [rename your repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository) to something more meaningful.
-- Clone your version to your local computer, using your Git username and repository name.
+- From a terminal, clone your newly-forked repository to your local computer, using your Git username and repository name instead of the placeholders here:
 
 ```
-git clone git@github.com:<your-user-name>/<your-repo-name>.git
+git clone git@github.com:<my-github-username>/<my-repository-name>.git
 ```
 
-- This should create a new folder, `<your-repo-name>`, in the current directory.
-- Change into that folder, which is the root directory of your new site.
+- This should create a new folder, `<my-repository-name>`, in the current directory.
+- Change into that folder, which is the root directory of your new site:
+
+```
+cd <my-repository-name>
+```
 
 ## Configure your local copy
 
