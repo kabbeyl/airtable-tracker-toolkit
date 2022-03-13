@@ -74,7 +74,7 @@ nav > ul {
   @apply font-normal;
 }
 
-nav li {
+nav li, footer button {
   @apply px-8;
   @apply leading-10;
   @apply rounded-full;
@@ -83,7 +83,7 @@ nav li {
   @apply hover:cursor-pointer;
 }
 
-nav li:hover {
+nav li:hover, footer button:hover {
   @apply bg-gray-200;
 }
 
