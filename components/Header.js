@@ -21,6 +21,10 @@ export const sections = [
     href: `/about`,
     text: `About`,
   },
+  {
+    href: `/guide`,
+    text: `Guide`
+  }
 ];
 
 const Header = ({ nav, showNav }) => {

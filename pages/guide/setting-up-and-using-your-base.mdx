@@ -1,0 +1,32 @@
+import TableOfContents from './TableOfContents';
+
+# Setting up and using your base
+
+## Initial set up
+
+1. Create a free Airtable account at [https://airtable.com/signup](https://airtable.com/signup).
+2. Go to the "Local Development Tracker" on [Airtable Universe](https://www.airtable.com/universe/exp1PtSWxyPHYGMIk/local-development-tracker), click "Copy Base", and add it to "My First Workspace."
+3. Invite anyone else working on the project to the [base](https://support.airtable.com/hc/en-us/articles/202625759-Adding-a-base-collaborator) (or [workspace](https://support.airtable.com/hc/en-us/articles/203313505-Adding-a-workspace-collaborator)) as a collaborator with editor or creator permissions.
+4. Before you start adding your own data, review and [delete]() the sample records in all three tables: Projects, Contact Us, and Tips.
+5. Don't delete, add or modify fields or tables before reading 
+
+## What you can and can't customize without coding
+
+The Airtable base will be linked to your public-facing site. Different elements of the base correspond to different elements of the site code, and certain changes you might want to make to your Airtable base could cause unintentional bugs in the site. Here’s what you can and can’t adjust without further coding. 
+
+### Don't make changes to
+
+- The names of the tables: (**Projects**, **Contact us**, and **Tips**), or their settings.
+- Any field that contain information that displays on or is submitted from the public site.
+  - Don't change their name, field type, or other options.
+  - Don't delete them: if you do not use a certain field, you can instead [hide]() it from your views.
+- Any field that is linked to other records in the base
+  - Don't change their name, field type, or other options.
+  - Don't delete them: if you do not use a certain field, you can instead [hide]() it from your views.
+  - In the **Projects** table, this includes the following fields:
+    - _Reports_
+    - _Tips_
+  - In the **Tips** table, this includes the following fields:
+    - _Projects_
+
+<TableOfContents index={5} />

@@ -18,11 +18,21 @@ h1, h2, h3, h4, h5, h6 {
 /* MDX styles */
 
 main > h1, h2 {
-  @apply mb-6;
+  @apply my-6;
+  @apply font-semibold;
+}
+
+main > h3 {
+  @apply my-4;
+  @apply font-semibold;
 }
 
 main > p {
   @apply my-6;
+}
+
+li > ul {
+  @apply ml-4;
 }
 
 /* Header */
@@ -89,7 +99,7 @@ nav li:hover, footer button:hover {
 
 /* Main */
 main {
-  @apply max-w-2xl;
+  @apply max-w-4xl;
   @apply mx-auto;
   @apply pt-6;
   @apply px-5;
@@ -122,7 +132,6 @@ main section h2 {
 main h1 {
   @apply text-xl;
   @apply md:text-2xl;
-  @apply font-medium;
   @apply my-2;
 }
 
@@ -130,13 +139,11 @@ main h2 {
   @apply text-lg;
   @apply md:text-xl;
   @apply leading-6;
-  @apply font-medium;
 }
 
 main h3 {
   @apply text-lg;
   @apply md:text-xl;
-  @apply font-medium;
 }
 
 main ul {
