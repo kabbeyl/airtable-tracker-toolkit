@@ -28,9 +28,28 @@ The easiest way to get your site up and running is with a hosting provider, such
 
 ## Configuring your site's domain
 
-In Netlify, navigate to your site settings.
+In Netlify, navigate to your site settings. Under "Domain management > Domains" from the sidebar, click "Add custom domain".
 
-Under "Domain management > Domains" from the sidebar, click "Add custom domain".
+Register your custom domain with Netlify [using these instructions](https://docs.netlify.com/domains-https/custom-domains/#assign-a-domain-to-a-site).
 
+Typically, you'll want to keep your existing DNS records, but [add a new DNS record](https://docs.netlify.com/domains-https/custom-domains/configure-external-dns/) on your current domain provider which points to your Netlify site.
+
+## Developing with `netlify dev`
+
+Now that your site is deployed to Netlify, and configured with the correct environment variables there, you can develop it locally with the `netlify dev` command. This is just like `npm run dev`, except that it will pull in environment variables from Netlify to build your site. 
+
+You can create a live development server, accessible from anywhere, with `netlify dev --live` and send a live preview URL to someone.
+
+To do this, you'll need to install the [Netlify CLI](https://www.netlify.com/products/cli/) and log into Netlify from the terminal.
+
+## Republishing the site
+
+Your site needs to be periodically rebuilt and redeployed in order to pull in the latest data from Airtable.
+
+There are a few different methods to do this - we'll look at the manual methods first and then look at ways the site can be automatically rebuilt.
+
+### Manual republishing of the site
+
+### Automatic republishing of the site
 
 <TableOfContents index={8} />

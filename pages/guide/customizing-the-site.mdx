@@ -24,13 +24,49 @@ module.exports = {
 
 ### `siteTitle`
 
+This is your site's title: it's displayed in the header, as well as in URL preview links.
+
 ### `organization`
+
+This is the name of your organization: it's displayed in the footer, as well as in URL preview links.
 
 ### `city` and `state`
 
+These two values are the city and state you're working in. These are displayed across the site as well as in URL preview links. These are for display only, so you can use whatever you want -- it does not have to be a city or state, but could be a neighborhood and city, or city and province.
+
 ### `boundingBox`
 
+This is a bit of a special variable. It's a list of four numbers, representing the geographical extent of your site. It controls two things:
+
+- The initial view of the map
+- Where the geocoder will attempt to locate your [project addresses](./setting-up-and-using-your-base#project-field-address)
+
+You can create a bounding box using this site: [https://boundingbox.klokantech.com/](https://boundingbox.klokantech.com/)
+
+- Search for your location
+- Adjust the rectangle to create the bounding box
+- Change the output format at lower left to "CSV RAW"
+- Copy-and-paste those four numbers between the square brackets in the file
+
 ### `primary`, `secondary`, and `tertiary`
+
+## Customizing the site content
+
+Inside the `pages` directory in you'll site, there are a couple key files you can customize.
+
+These files are [MDX]() files, meaning that they're principally written in Markdown and then can contain JSX components.
+
+Here's a [cheat sheet for Markdown](https://www.markdownguide.org/basic-syntax/).
+
+### `index.mdx`
+
+This is your site's homepage.
+
+### `about.mdx`
+
+This is the site's About page.
+
+
 
 
 <TableOfContents index={7} />
