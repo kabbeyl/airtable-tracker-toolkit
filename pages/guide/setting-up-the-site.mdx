@@ -1,5 +1,77 @@
 import TableOfContents from './TableOfContents';
+import Image from 'next/image';
+import new_supabase_bucket_policy from './images/setting-up-the-site/new-supabase-bucket-policy.png'
 
 # Setting up the site
+
+Before you can begin development, you'll have to make changes to two files that sit at the root of your site.
+
+## Configuring `.env.development.local`
+
+`.env.development.local` contains environment variables used in your application. These are principally API tokens that are used to connect to Airtable, Mapbox, and Supabase.
+
+This file will **not** be committed to GitHub, since it contains sensitive information -- That's why it's included in the `.gitignore` file.
+
+You will eventually want these environment variables to live in Netlify; more on that later!
+
+### Airtable configuration
+
+You should already have an Airtable account; the next step is to get your personal API key and the ID of your Base.
+
+1. Find your API key on your [Airtable account page](https://airtable.com/account). You will have to click the purple input box to reveal the API key.
+2. Copy this value as the `AIRTABLE_API_KEY`.
+3. TK Find the ID of your Base
+4. TK Copy this value.
+
+### Mapbox configuration
+
+Mapbox is fairly simple to set up:
+
+1. Sign up for an account [here](https://account.mapbox.com/auth/signup/)
+2. On the main [account page](https://account.mapbox.com/), click 'Create a token' to create a new access token.
+3. Copy that access token as the `NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN`.
+
+### Supabase configuration
+
+#### Configuring Supabase bucket
+
+1. Create a Supabase account, using your GitHub profile.
+2. Create a new project, named `development-tracker.`
+3. Create a new storage bucket, named `report-photos`. Make sure that the "public bucket" option is checked.
+4. Go to "Policies", under "Configuration", and create a "New policy" on the `report-photos` bucket.
+5. Choose "Create a policy from scratch".
+
+Create a new policy that looks like this: `SELECT` and `INSERT` should be checked.
+
+<Image src={new_supabase_bucket_policy} />
+
+#### Supabase environment variables
+
+6. Navigate to your Supabase project settings, which is the gear icon on the bottom of the left-hand sidebar.
+7. Click "API" under "Project Settings".
+8. Copy, the `anon` `public` API key, starting with `ey`, as the `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+9. Copy the URL of the Supabase project, including the `.supabase.co` suffix, under "Configuration", as the `NEXT_PUBLIC_SUPABASE_URL`: 
+
+Supabase is now all set up!
+
+## Configuring `toolkit.config.js`
+
+- This contains basic sitewide configuration data
+- The defaults are set up for the Detroit area, but you will need to change them.
+
+It looks like this:
+
+```
+module.exports = {
+  siteTitle: `Airtable Tracker Toolkit`,
+  organization: `Test Organization Name`,
+  city: `Detroit`,
+  state: `Michigan`,
+  boundingBox: [-83.287803, 42.25496, -82.910427, 42.45023],
+  primary: '#9ADCFF',
+  secondary: '#FFF89A',
+  tertiary: '#FFB2A6',
+}
+```
 
 <TableOfContents index={6} />

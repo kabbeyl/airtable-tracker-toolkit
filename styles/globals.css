@@ -23,10 +23,18 @@ h3, h4 {
   @apply my-4;
 }
 
-/* MDX styles */
+p {
+  @apply my-2;
+}
 
 li > ul {
   @apply ml-4;
+}
+
+pre {
+  @apply p-4;
+  @apply my-4;
+  @apply bg-gray-100;
 }
 
 /* Header */
