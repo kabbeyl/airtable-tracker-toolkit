@@ -16,19 +16,29 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1, h2 {
-  @apply my-6;
+  @apply my-2;
 }
 
 h3, h4 {
-  @apply my-4;
+  @apply my-2;
 }
 
 p {
-  @apply my-2;
+  @apply mt-2;
+  @apply mb-4;
+}
+
+main ul, main ol {
+  @apply my-4;
 }
 
 li > ul {
   @apply ml-4;
+  @apply list-disc;
+}
+
+ul ul {
+  @apply my-0;
 }
 
 pre {
@@ -134,13 +144,11 @@ main section h2 {
 main h1 {
   @apply text-xl;
   @apply md:text-2xl;
-  @apply my-2;
 }
 
 main h2 {
   @apply text-lg;
   @apply md:text-xl;
-  @apply leading-6;
 }
 
 main h3 {
@@ -155,7 +163,8 @@ main ul {
 
 main ol {
   @apply list-decimal;
-  @apply list-inside;
+  @apply list-outside;
+  @apply ml-6;
 }
 
 /* Footer */

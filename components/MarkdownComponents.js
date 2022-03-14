@@ -6,9 +6,15 @@ import slugify from "slugify";
 let slugifyHeader = (children) => {
   let slug;
   if(Array.isArray(children)) {
-    slug = slugify(children.join('').toLowerCase(), { remove: /[*+~.()'"!:@]/g });
+    let fixed = children.map(c => {
+      return c.props?.children || c
+    })
+    slug = slugify(fixed.join('').toLowerCase(), { remove: /[*+~.()'"!:@]/g });
   }
-  else {
+  if(children.props?.children) {
+    slug = slugify(children.props.children.toLowerCase(), { remove: /[*+~.()'"!:@]/g });
+  }
+  if(typeof children === 'string'){
     slug = slugify(children.toLowerCase(), { remove: /[*+~.()'",!:@]/g });
   }
 
@@ -16,7 +22,6 @@ let slugifyHeader = (children) => {
 }
 
 const CustomH2 = ({ children }) => {
-
   let slug = slugifyHeader(children);
   return (
     <div className="flex items-center">
@@ -32,9 +37,7 @@ const CustomH2 = ({ children }) => {
 };
 
 const CustomH3 = ({ children }) => {
-
   let slug = slugifyHeader(children);
-
   return (
     <div className="flex items-center">
       <h3 id={slug}>{children}</h3>
@@ -48,9 +51,27 @@ const CustomH3 = ({ children }) => {
   );
 };
 
+const CustomH4 = ({ children }) => {
+
+  let slug = slugifyHeader(children);
+
+  return (
+    <div className="flex items-center">
+      <h4 id={slug}>{children}</h4>
+      <a href={`#${slug}`}>
+        <FontAwesomeIcon
+          icon={faLink}
+          className="h-4 ml-2 text-gray-300 hover:text-blue-500"
+        ></FontAwesomeIcon>
+      </a>
+    </div>
+  );
+};
+
 const MarkdownComponents = {
   h2: CustomH2,
-  h3: CustomH3
+  h3: CustomH3,
+  h4: CustomH4
 };
 
 export default MarkdownComponents;
