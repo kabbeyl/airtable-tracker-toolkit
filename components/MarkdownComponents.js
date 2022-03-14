@@ -52,9 +52,7 @@ const CustomH3 = ({ children }) => {
 };
 
 const CustomH4 = ({ children }) => {
-
   let slug = slugifyHeader(children);
-
   return (
     <div className="flex items-center">
       <h4 id={slug}>{children}</h4>
