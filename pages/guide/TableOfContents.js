@@ -45,7 +45,7 @@ const TableOfContents = ({ index=null }) => {
       <h4 className="mb-3">Table of contents</h4>
       <ol>
         {pages.map((page, ind) => (
-          <li className={index === ind ? "font-bold my-1" : "my-1"}>
+          <li className={index === ind ? "font-bold my-1" : "my-1"} key={page.name}>
             <Link href={page.href}>{page.name}</Link>
           </li>
         ))}
