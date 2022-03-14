@@ -79,7 +79,7 @@ export async function getStaticProps(context) {
 
   let geometry = await geocodeAddress(project.address);
 
-  let parcelData = await getParcel(project.parcelId)
+  // let parcelData = await getParcel(project.parcelId)
 
   let feature = {
     type: "Feature",
@@ -91,7 +91,7 @@ export async function getStaticProps(context) {
     props: {
       proj: project,
       feature: feature,
-      parcelData: parcelData
+      // parcelData: parcelData
     },
   };
 }
@@ -120,7 +120,7 @@ const ProjectPage = (props) => {
             {proj.synopsis}
           </ReactMarkdown>
         </PageSection>
-        <ProjectParcel parcelId={proj.parcelData} parcelData={props.parcelData} />
+        {/* <ProjectParcel parcelId={proj.parcelData} parcelData={props.parcelData} /> */}
         <ProjectMap id={proj.id} feature={feature} project={proj} />
         {proj.images && proj.images.length > 0 && <ProjectGallery images={proj.images} caption={proj.imageCaption} />}
       </div>
