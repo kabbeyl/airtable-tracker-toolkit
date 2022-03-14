@@ -32,6 +32,10 @@ main ul, main ol {
   @apply my-4;
 }
 
+img {
+@apply my-10;
+}
+
 li > ul {
   @apply ml-4;
   @apply list-disc;

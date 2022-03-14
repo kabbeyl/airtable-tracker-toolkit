@@ -1,5 +1,7 @@
-import Link from 'next/link'
-import React from 'react';
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
+import React from "react";
 export const pages = [
   {
     name: "What's in this guide?",
@@ -39,18 +41,48 @@ export const pages = [
   },
 ];
 
-const TableOfContents = ({ index=null }) => {
+const TableOfContents = ({ index = null }) => {
   return (
-    <section className="px-4 my-6 pb-4">
-      <h4>Table of contents</h4>
-      <ol>
-        {pages.map((page, ind) => (
-          <li className={index === ind ? "font-bold my-1" : "my-1"} key={page.name}>
-            <Link href={page.href}>{page.name}</Link>
-          </li>
-        ))}
-      </ol>
-    </section>
+    <>
+      {index < pages.length && (
+        <section className="flex items-center justify-between py-2 px-3 mt-8">
+          <div>
+            {index > 0 && (
+              <>
+                <FontAwesomeIcon icon={faArrowLeft} className="h-4 mr-4" />
+              <Link href={pages[index-1].href}>
+                {pages[index - 1].name}
+              </Link>
+                </>
+            )}
+          </div>
+
+          <div>
+            {index < pages.length - 1 && (
+              <>
+              <Link href={pages[index+1].href}>
+                {pages[index + 1].name}
+              </Link>
+                <FontAwesomeIcon icon={faArrowRight} className="h-4 ml-4" />
+                </>
+            )}
+          </div>
+        </section>
+      )}
+      <section className="px-4 py-4 mb-6 border-t-0">
+        <h4>Table of contents</h4>
+        <ol>
+          {pages.map((page, ind) => (
+            <li
+              className={index === ind ? "font-bold my-1" : "my-1"}
+              key={page.name}
+            >
+              <Link href={page.href}>{page.name}</Link>
+            </li>
+          ))}
+        </ol>
+      </section>
+    </>
   );
 };
 

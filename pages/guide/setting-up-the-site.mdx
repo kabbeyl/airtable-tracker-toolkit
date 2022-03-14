@@ -20,12 +20,12 @@ You should already have an Airtable account; the next step is to get your person
 
 1. Find your API key on your [Airtable account page](https://airtable.com/account). You will have to click the purple input box to reveal the API key.
 2. Copy this value as the `AIRTABLE_API_KEY`.
-3. TK Find the ID of your Base
-4. TK Copy this value.
+3. Find the ID of your base: from the [Airtable API documentation](https://airtable.com/api), select your base; the base ID, which starts with `app` is the value you need.
+4. Copy this value as the `AIRTABLE_BASE_ID`.
 
 ### Mapbox configuration
 
-Mapbox is fairly simple to set up:
+[Mapbox]() is used for the map on the site, as well as to geocode the [addresses](./setting-up-and-using-your-base#project-field-address) attached to each project.
 
 1. Sign up for an account [here](https://account.mapbox.com/auth/signup/)
 2. On the main [account page](https://account.mapbox.com/), click 'Create a token' to create a new access token.
@@ -52,7 +52,7 @@ Create a new policy that looks like this: `SELECT` and `INSERT` should be checke
 8. Copy, the `anon` `public` API key, starting with `ey`, as the `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
 9. Copy the URL of the Supabase project, including the `.supabase.co` suffix, under "Configuration", as the `NEXT_PUBLIC_SUPABASE_URL`: 
 
-Supabase is now all set up!
+Congrats! You've configured all the underlying services.
 
 ## Configuring `toolkit.config.js`
 
