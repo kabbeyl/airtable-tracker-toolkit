@@ -1,7 +1,36 @@
 import TableOfContents from './TableOfContents';
+import Image from 'next/image'
+import netlifyRepoBuildSettings from './images/publishing-the-site/netlify-repo-build-settings.png'
+import netlifyRepoEnvVar from './images/publishing-the-site/netlify-repo-env-var.png'
 
 # Publishing the site
 
+You've finished making some changes to the data in [your base], and you're ready to publish your site to the internet.
+
+The easiest way to get your site up and running is with a hosting provider, such as Netlify.
+
 ## Configuring Netlify
+
+1. [Sign up](https://app.netlify.com/signup) for a Netlify account - it's easiest if you log in with GitHub, since you'll eventually link your GitHub site repository to your Netlify account.
+2. Once in Netlify, click the "Add new site" dropdown and choose "Import an existing project".
+3. You'll be prompted to log in to GitHub.
+4. Next, you can choose a repository to build the site from. Choose the development tracker repository that you created.
+5. Use the following settings:
+
+<Image src={netlifyRepoBuildSettings} width={575} height={500} />
+
+6. Under advanced build settings, add your environment variables, from your `.env.development.local` file.
+
+<Image src={netlifyRepoEnvVar} width={600} height={300} />
+
+7. Finally, click 'Deploy site'.
+8. Netlify will build your site, and deploy it! This process takes a few minutes.
+
+## Configuring your site's domain
+
+In Netlify, navigate to your site settings.
+
+Under "Domain management > Domains" from the sidebar, click "Add custom domain".
+
 
 <TableOfContents index={8} />

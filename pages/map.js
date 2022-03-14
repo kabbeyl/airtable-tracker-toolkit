@@ -187,7 +187,7 @@ export default function ProjectMapPage(props) {
           Explore the map or enter an address to see developments in {city}.
           <span className="block">Click on a project to see more details.</span>
         </p>
-        <span className="leading-7 font-light bg-highlight mb-4 text-sm">
+        <span className="font-light bg-highlight mb-4 text-sm">
           {" "}
           See something missing? <Link href={`/submit-a-tip`}>
             Send a tip

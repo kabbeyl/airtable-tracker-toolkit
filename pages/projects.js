@@ -57,7 +57,7 @@ export default function ListPage({ projects }) {
           Search for developments or browse the list, then click on any project
           for more details.
         </p>
-        <span className="leading-7 font-light bg-highlight mb-4 text-sm">
+        <span className=" font-light bg-highlight mb-4 text-sm">
           {" "}
           See something missing? <Link href={`/submit-a-tip`}>
             Send a tip

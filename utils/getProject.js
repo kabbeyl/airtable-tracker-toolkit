@@ -12,5 +12,7 @@ export const getProject = (proj) => {
     meetings: proj.get("Meetings") || null,
     synopsis: proj.get("Synopsis") || '',
     parcelId: proj.get("Parcel ID") || '',
+    images: proj.get("Images") || [],
+    imageCaption: proj.get("Image Caption") || '',
    };
 }

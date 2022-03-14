@@ -1,9 +1,9 @@
 .embla {
   position: relative;
   background-color: #fff;
-  padding: 20px;
   margin-left: auto;
   margin-right: auto;
+  @apply pt-4;
 }
 
 .embla__viewport {
@@ -78,7 +78,6 @@
   display: flex;
   list-style: none;
   justify-content: center;
-  padding-top: 10px;
 }
 
 .embla__dot {
@@ -105,5 +104,6 @@
 }
 
 .embla__dot.is-selected:after {
+  @apply bg-tertiary;
   opacity: 1;
 }

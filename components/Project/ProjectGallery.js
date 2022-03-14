@@ -36,7 +36,7 @@ const ProjectGallery = ({ images, caption }) => {
   }, [embla, setScrollSnaps, onSelect]);
 
   return (
-    <PageSection title={`What does it look like?`} className='row-span-2 col-span-1 md:col-span-2 pb-8' padding={false}>
+    <PageSection title={`What does it look like?`} className='row-span-2 col-span-1 md:col-span-2 pb-4' padding={false}>
       <div className="embla">
         <div className="embla__viewport" ref={viewportRef}>
           <div className="embla__container">
@@ -65,7 +65,7 @@ const ProjectGallery = ({ images, caption }) => {
           />
         ))}
       </div>
-      <ReactMarkdown className="mt-4 max-w-lg mx-auto text-center">
+      <ReactMarkdown className="mt-4 max-w-lg mx-auto text-center px-6 md:px-0">
         {caption.split("\n")[selectedIndex] ? caption.split("\n")[selectedIndex] : caption}
       </ReactMarkdown>
     </PageSection>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -7,33 +7,72 @@
 body {
   background: #fafafa;
   font-family: Inter, sans-serif;
-
 }
 
-h1, h2, h3, h4, h5, h6 {
+/* Links */
+a {
+  color: #2965ff;
+  @apply underline;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: Inter, sans-serif;
   @apply font-semibold;
 }
 
-h1, h2 {
+h1,
+h2 {
   @apply my-2;
 }
 
-h3, h4 {
+h3,
+h4 {
   @apply my-2;
 }
+
+h1 {
+  @apply text-xl;
+  @apply md:text-2xl;
+}
+
+h2 {
+  @apply text-lg;
+  @apply md:text-xl;
+}
+
+h3 {
+  @apply text-base;
+  @apply md:text-lg;
+}
+
+/* Paragraphs */
 
 p {
   @apply mt-2;
   @apply mb-4;
 }
 
-main ul, main ol {
+/* Lists */
+ul, ol {
   @apply my-4;
 }
 
-img {
-@apply my-10;
+ul {
+  @apply list-disc;
+  @apply list-outside;
+  @apply ml-6;
+}
+
+ol {
+  @apply list-decimal;
+  @apply list-outside;
+  @apply ml-6;
 }
 
 li > ul {
@@ -91,25 +130,30 @@ nav > ul {
   @apply hidden;
   @apply md:flex;
   @apply items-center;
-  gap: 24px;
+  @apply gap-5;
+  @apply list-none;
 }
 
 .nav-here {
-  border: 1px solid #212529;
-  background: none;
+  @apply border-black;
+  @apply border-1;
+  @apply bg-gray-50;
   @apply font-normal;
 }
 
-nav li, footer button {
-  @apply px-8;
-  @apply leading-10;
+nav li,
+footer button {
+  @apply text-sm;
+  @apply px-6;
+  @apply py-3;
   @apply rounded-full;
   @apply bg-primary;
   @apply bg-opacity-30;
   @apply hover:cursor-pointer;
 }
 
-nav li:hover, footer button:hover {
+nav li:hover,
+footer button:hover {
   @apply bg-gray-200;
 }
 
@@ -122,11 +166,6 @@ main {
   @apply md:px-0;
   @apply md:pt-20;
   @apply pb-20;
-}
-
-main a {
-  color: #2965ff;
-  @apply underline;
 }
 
 main section {
@@ -143,32 +182,6 @@ main section h2 {
   @apply px-8;
   @apply py-3;
   @apply my-0;
-}
-
-main h1 {
-  @apply text-xl;
-  @apply md:text-2xl;
-}
-
-main h2 {
-  @apply text-lg;
-  @apply md:text-xl;
-}
-
-main h3 {
-  @apply text-lg;
-  @apply md:text-xl;
-}
-
-main ul {
-  @apply list-disc;
-  @apply list-inside;
-}
-
-main ol {
-  @apply list-decimal;
-  @apply list-outside;
-  @apply ml-6;
 }
 
 /* Footer */
@@ -191,11 +204,6 @@ footer a:hover {
 footer button {
   @apply mt-4;
   @apply md:mt-7;
-  padding: 0px 30px;
-  line-height: 40px;
-  border-radius: 100px;
-  @apply text-sm;
-  @apply leading-10;
 }
 
 footer > .container {
@@ -322,10 +330,6 @@ footer span,
   @apply w-full !important;
   @apply max-w-full !important;
   @apply py-4 !important;
-}
-
-.synopsis p {
-  @apply mb-2;
 }
 
 ::selection {

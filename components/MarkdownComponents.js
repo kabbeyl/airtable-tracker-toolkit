@@ -1,6 +1,6 @@
 import { faLink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Link from "next/link";
+import Image from "next/image";
 import slugify from "slugify";
 
 let slugifyHeader = (children) => {
@@ -69,7 +69,10 @@ const CustomH4 = ({ children }) => {
 const MarkdownComponents = {
   h2: CustomH2,
   h3: CustomH3,
-  h4: CustomH4
+  h4: CustomH4,
+  img: (props) => (
+    <Image {...props} layout='fill' loading="lazy" />
+  )
 };
 
 export default MarkdownComponents;

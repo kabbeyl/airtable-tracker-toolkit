@@ -116,7 +116,7 @@ const ProjectPage = (props) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
         <ProjectHeader {...proj} className='col-span-2' />
         <PageSection title="What's happening?" className="col-span-1 md:col-span-2 synopsis">
-          <ReactMarkdown remarkPlugins={[remarkGfm]} linkTarget="_blank" >
+          <ReactMarkdown remarkPlugins={[remarkGfm]} linkTarget="_blank" className="px-0 md:px-3" >
             {proj.synopsis}
           </ReactMarkdown>
         </PageSection>

@@ -4,6 +4,23 @@ import new_supabase_bucket_policy from './images/setting-up-the-site/new-supabas
 
 # Setting up the site
 
+## Create your own copy of this site
+
+- Fork this repository, using the "Fork" button at the top right of this page.
+- You may want to [rename your repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository) to something more meaningful.
+- From a terminal, clone your newly-forked repository to your local computer, using your Git username and repository name instead of the placeholders here:
+
+```
+git clone git@github.com:<my-github-username>/<my-repository-name>.git
+```
+
+- This should create a new folder, `<my-repository-name>`, in the current directory.
+- Change into that folder, which is the root directory of your new site:
+
+```
+cd <my-repository-name>
+```
+
 Before you can begin development, you'll have to make changes to two files that sit at the root of your site.
 
 ## Configuring `.env.development.local`
@@ -52,36 +69,24 @@ Create a new policy that looks like this: `SELECT` and `INSERT` should be checke
 8. Copy, the `anon` `public` API key, starting with `ey`, as the `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
 9. Copy the URL of the Supabase project, including the `.supabase.co` suffix, under "Configuration", as the `NEXT_PUBLIC_SUPABASE_URL`: 
 
-Congrats! You've configured all the underlying services.
+Congrats! You've configured all the underlying services - you're ready to run the development server.
 
-## Configuring `toolkit.config.js`
+## Start the development server
 
-- This contains basic sitewide configuration data
-- The defaults are set up for the Detroit area, but you will need to change them.
+Now that you're done configuring the site, it's time to run a development server locally so you can make changes to the site and test those changes on your local machine, before pushing those changes to your GitHub repository.
 
-It looks like this:
+Make sure your project is open in  run the following command: `npm run dev`.
 
-```
-module.exports = {
-  siteTitle: `Airtable Tracker Toolkit`,
-  organization: `Test Organization Name`,
-  city: `Detroit`,
-  state: `Michigan`,
-  boundingBox: [-83.287803, 42.25496, -82.910427, 42.45023],
-  primary: '#9ADCFF',
-  secondary: '#FFF89A',
-  tertiary: '#FFB2A6',
-}
+You should see a message in the terminal:
+
+```bash
+ready - started server on 0.0.0.0:3000, url: http://localhost:3000
 ```
 
-### `siteTitle`
+Go to your browser and navigate to `http://localhost:3000` -- you should see a live copy of the site!
 
-### `organization`
+### Common error messages
 
-### `city` and `state`
-
-### `boundingBox`
-
-### `primary`, `secondary`, and `tertiary`
+Now, you 
 
 <TableOfContents index={6} />
