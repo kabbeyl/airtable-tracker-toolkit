@@ -1,14 +1,4 @@
 const AttributeTable = ({ attributes }) => {
-
-  if (attributes === null || attributes === undefined) {
-    attributes = [
-      {
-        title: "Dimensions",
-        value: "145 x 60"
-      }
-    ]
-  }
-
   return (
     <table className="mb-4">
       <tbody>

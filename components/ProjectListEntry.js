@@ -15,7 +15,7 @@ const ProjectListEntry = ({ project }) => {
   return (
     <Link href={`/projects/${project.slug}`}>
       <div className="border-1 border-black bg-white max-w-xl p-5 hover:cursor-pointer">
-        <h3 className="text-base leading-6 mb-2">
+        <h3 className="text-base leading-6 mb-2 mt-0">
           <Link href={`/projects/${project.slug}`}>
             {project.name}
           </Link>

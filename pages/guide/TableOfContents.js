@@ -41,8 +41,8 @@ export const pages = [
 
 const TableOfContents = ({ index=null }) => {
   return (
-    <section className="p-3 my-6">
-      <h4 className="mb-3">Table of contents</h4>
+    <section className="px-4 my-6 pb-4">
+      <h4>Table of contents</h4>
       <ol>
         {pages.map((page, ind) => (
           <li className={index === ind ? "font-bold my-1" : "my-1"} key={page.name}>

@@ -53,7 +53,7 @@ export default function ListPage({ projects }) {
       </Head>
       <div className="max-w-xl mx-auto">
         <h2>List of {city} development projects</h2>
-        <p className="pt-4 md:pt-6 pb-2">
+        <p className="pb-2">
           Search for developments or browse the list, then click on any project
           for more details.
         </p>

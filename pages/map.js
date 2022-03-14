@@ -183,7 +183,7 @@ export default function ProjectMapPage(props) {
 
       <div className="max-w-xl mx-auto">
         <h2>Map of {city} development projects</h2>
-        <p className="pt-4 md:pt-6 pb-2">
+        <p className="pb-2">
           Explore the map or enter an address to see developments in {city}.
           <span className="block">Click on a project to see more details.</span>
         </p>
