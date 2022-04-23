@@ -1,9 +1,9 @@
 module.exports = {
-  siteTitle: `Airtable Tracker Toolkit`,
-  organization: `Test Organization Name`,
-  city: `Detroit`,
+  siteTitle: `Southfield Development Tracker`,
+  organization: `Kate's Test News Org`,
+  city: `Southfield`,
   state: `Michigan`,
-  boundingBox: [-83.287803, 42.25496, -82.910427, 42.45023],
+  boundingBox: [-83.31993806,42.44203297,-83.20052201,42.51747085],
   primary: '#9ADCFF',
   secondary: '#FFF89A',
   tertiary: '#FFB2A6',
